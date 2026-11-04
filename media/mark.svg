@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <style>
+    .bean { fill: #7b4626; }
+    @media (prefers-color-scheme: dark) { .bean { fill: #d38c52; } }
+  </style>
+  <mask id="seam" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+    <g transform="rotate(35 50 50)">
+      <ellipse cx="50" cy="50" rx="29" ry="41" fill="#fff"/>
+      <path d="M50 12 C 38 32, 62 68, 50 88" fill="none" stroke="#000" stroke-width="7" stroke-linecap="round"/>
+    </g>
+  </mask>
+  <rect class="bean" width="100" height="100" mask="url(#seam)"/>
+</svg>

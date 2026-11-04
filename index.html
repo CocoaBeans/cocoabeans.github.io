@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kevin Ross · Apps for Mac and iPhone</title>
+<meta name="description" content="A small collection of independent apps for Mac and iPhone, built with care: PingPoint, Mimamori, Sesh Time, MetaSort and Twenty-Four Mountains.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b10" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/svg+xml" href="media/mark.svg">
+<link rel="apple-touch-icon" href="media/mimamori.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kevin Ross · Apps for Mac and iPhone">
+<meta property="og:description" content="A small collection of independent apps for Mac and iPhone, built with care.">
+<meta property="og:url" content="https://cocoabeans.github.io/">
+<meta name="twitter:card" content="summary">
+<style>
+  /* A quiet, near-black room so each app's own color carries its card. */
+  :root {
+    --bg-top: #16151f;
+    --bg: #0b0b10;
+    --bg-deep: #07070a;
+    --surface: rgba(255, 255, 255, 0.04);
+    --surface-strong: rgba(255, 255, 255, 0.07);
+    --surface-line: rgba(255, 255, 255, 0.09);
+    --text: #ecebf2;
+    --muted: #a9a7b8;
+    --faint: #85839a;
+    --link: #f0f0f6;
+    --accent: #ecebf2;
+    --accent-text: #0b0b10;
+    --icon-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.8);
+    --glow-strength: 30%;
+
+    /* Each app's color, taken from its icon. */
+    --ping: #f2a312;
+    --mima: #ffc761;
+    --sesh: #ff3ad6;
+    --meta: #7b7cf6;
+    --mtn:  #e0b257;
+    --code: #8fd18a;
+    --cocoa: #d38c52;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      /* Warm paper, ink text. */
+      --bg-top: #fbfaf6;
+      --bg: #f6f4ef;
+      --bg-deep: #f1eee7;
+      --surface: rgba(255, 255, 255, 0.75);
+      --surface-strong: #ffffff;
+      --surface-line: rgba(40, 35, 25, 0.1);
+      --text: #22222a;
+      --muted: #55545f;
+      --faint: #6d6c78;
+      --link: #22222a;
+      --accent: #22222a;
+      --accent-text: #fbfaf6;
+      --icon-shadow: 0 10px 22px -12px rgba(40, 35, 25, 0.45);
+      --glow-strength: 22%;
+
+      --ping: #c77d00;
+      --mima: #c9861a;
+      --sesh: #c4169f;
+      --meta: #4d4fd8;
+      --mtn:  #a77a25;
+      --code: #2f8a3a;
+      --cocoa: #7b4626;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg-deep);
+    background-image: linear-gradient(180deg, var(--bg-top) 0%, var(--bg) 30rem, var(--bg-deep) 100%);
+    background-repeat: no-repeat;
+    color: var(--text);
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--link); text-underline-offset: 3px; }
+  :focus-visible { outline: 2px solid var(--text); outline-offset: 3px; border-radius: 6px; }
+  .wrap { width: min(920px, 100% - 32px); margin-inline: auto; }
+
+  /* The mark: a cocoa bean, for CocoaBeans and the Cocoa framework. */
+  .mark { display: block; aspect-ratio: 1; color: var(--cocoa); flex: none; }
+
+  header.top { padding: 18px 0; }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-weight: 650; }
+  .brand .mark { width: 26px; }
+  nav.links { display: flex; gap: 22px; font-size: 15px; }
+  nav.links a { color: var(--muted); text-decoration: none; }
+  nav.links a:hover { color: var(--text); }
+
+  .hero { padding: 56px 0 24px; }
+  .hero .mark { width: 76px; margin: 0 0 26px -6px; }
+  h1 { font-size: clamp(44px, 8vw, 68px); line-height: 1.05; margin: 0; letter-spacing: -0.02em; font-weight: 750; }
+  .tagline { font-size: clamp(20px, 3vw, 25px); line-height: 1.4; margin: 16px 0 12px; font-weight: 500; max-width: 32ch; }
+  .intro { color: var(--muted); margin: 0 0 28px; max-width: 58ch; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .button { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 12px; font-weight: 650; font-size: 15.5px;
+            text-decoration: none; background: var(--accent); color: var(--accent-text); }
+  .button.ghost { background: var(--surface); color: var(--text); border: 1px solid var(--surface-line); }
+  .button:hover { filter: brightness(1.08); }
+  .button svg { width: 17px; height: 17px; }
+
+  section { padding: 64px 0 0; }
+  h2 { font-size: clamp(24px, 3.4vw, 30px); letter-spacing: -0.01em; margin: 0 0 18px; font-weight: 700; }
+
+  /* App cards: the whole card is the link. */
+  .apps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .app a {
+    display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 20px; align-items: center;
+    padding: 20px 22px; border-radius: 18px; text-decoration: none; color: inherit;
+    background: var(--surface); border: 1px solid var(--surface-line);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .app a:hover, .app a:focus-visible {
+    border-color: color-mix(in srgb, var(--c) 55%, transparent);
+    box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--c) var(--glow-strength), transparent), 0 0 0 1px color-mix(in srgb, var(--c) 25%, transparent) inset;
+    transform: translateY(-1px);
+  }
+  .icon { width: 72px; height: 72px; display: block; filter: drop-shadow(var(--icon-shadow)); }
+  .icon.square { border-radius: 22.5%; }
+  /* Mac-style icons carry their own transparent margin; scale them to match. */
+  .icon.mac { transform: scale(1.2); }
+  .app h3 { margin: 0; font-size: 19px; font-weight: 680; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+  .platform { font-size: 13px; font-weight: 600; color: var(--c); letter-spacing: 0.01em; }
+  .app p { margin: 4px 0 0; color: var(--muted); font-size: 15.5px; }
+  .go { color: var(--faint); font-size: 14px; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+  .go svg { width: 16px; height: 16px; transition: transform 0.2s; }
+  .app a:hover .go { color: var(--text); }
+  .app a:hover .go svg { transform: translate(2px, -2px); }
+
+  .more { margin: 18px 0 0; color: var(--muted); font-size: 15.5px; }
+
+  footer { margin-top: 96px; padding: 28px 0 44px; border-top: 1px solid var(--surface-line); color: var(--faint); font-size: 14.5px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+  footer a { color: var(--muted); }
+  footer nav { display: flex; gap: 20px; }
+
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .hero { padding-top: 32px; }
+    .app a { grid-template-columns: 56px minmax(0, 1fr); gap: 16px; padding: 18px; align-items: start; }
+    .icon { width: 56px; height: 56px; }
+    .go { grid-column: 2; }
+    nav.links { gap: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .app a, .go svg { transition: none; }
+    .app a:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- The bean is a tilted oval with its seam cut out, so it works on any background. -->
+    <mask id="bean-seam" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+      <g transform="rotate(35 50 50)">
+        <ellipse cx="50" cy="50" rx="29" ry="41" fill="#fff"/>
+        <path d="M50 12 C 38 32, 62 68, 50 88" fill="none" stroke="#000" stroke-width="7" stroke-linecap="round"/>
+      </g>
+    </mask>
+    <symbol id="bean" viewBox="0 0 100 100"><rect width="100" height="100" fill="currentColor" mask="url(#bean-seam)"/></symbol>
+  </defs>
+</svg>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><svg class="mark" aria-hidden="true"><use href="#bean"/></svg>Kevin Ross</a>
+    <nav class="links" aria-label="Site">
+      <a href="#apps">Apps</a>
+      <a href="#open-source">Open source</a>
+      <a href="https://github.com/CocoaBeans">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <svg class="mark" aria-hidden="true"><use href="#bean"/></svg>
+      <h1>Kevin Ross</h1>
+      <p class="tagline">A small collection of independent apps for Mac and iPhone, built with care.</p>
+      <p class="intro">A latency map for the road, a watchful eye on coding agents, a calm meditation timer, a tidy home for your photos, and classical Feng Shui charting.</p>
+      <div class="cta">
+        <a class="button" href="mailto:kevin@twentyfourmountains.com?subject=Hello">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="14" height="11" rx="2"/><path d="m3.5 6 6.5 5 6.5-5"/></svg>
+          Say hello
+        </a>
+        <a class="button ghost" href="https://github.com/CocoaBeans">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="apps">
+    <div class="wrap">
+      <h2>Apps</h2>
+      <ul class="apps">
+        <li class="app" style="--c: var(--ping)">
+          <a href="https://pingpoint.io">
+            <img class="icon square" src="media/pingpoint.png" alt="" width="72" height="72">
+            <div>
+              <h3>PingPoint <span class="platform">iPhone · iPad</span></h3>
+              <p>Visualize network latency on a live map as you move. Spot dead zones and strong signal at a glance.</p>
+            </div>
+            <span class="go">pingpoint.io <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg></span>
+          </a>
+        </li>
+        <li class="app" style="--c: var(--mima)">
+          <a href="https://cocoabeans.github.io/mimamori/">
+            <img class="icon mac" src="media/mimamori.png" alt="" width="72" height="72">
+            <div>
+              <h3>Mimamori <span class="platform">Mac · Free and open source</span></h3>
+              <p>A lightweight Mac app that keeps watch over git worktrees while coding agents work.</p>
+            </div>
+            <span class="go">Learn more <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg></span>
+          </a>
+        </li>
+        <li class="app" style="--c: var(--sesh)">
+          <a href="https://cocoabeans.github.io/apps/seshtime/">
+            <picture>
+              <source srcset="media/seshtime-light.png" media="(prefers-color-scheme: light)">
+              <img class="icon square" src="media/seshtime-dark.png" alt="" width="72" height="72">
+            </picture>
+            <div>
+              <h3>Sesh Time <span class="platform">iPhone</span></h3>
+              <p>A calm, minimalist interval timer for meditation and any practice you keep.</p>
+            </div>
+            <span class="go">Learn more <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg></span>
+          </a>
+        </li>
+        <li class="app" style="--c: var(--meta)">
+          <a href="https://cocoabeans.github.io/apps/metasort/">
+            <img class="icon" src="media/metasort.png" alt="" width="72" height="72">
+            <div>
+              <h3>MetaSort <span class="platform">Mac</span></h3>
+              <p>Organize your photos, videos and audio into clean, date-based folders, right on your Mac.</p>
+            </div>
+            <span class="go">Learn more <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg></span>
+          </a>
+        </li>
+        <li class="app" style="--c: var(--mtn)">
+          <a href="https://24mountains.com">
+            <img class="icon mac" src="media/twentyfourmountains.png" alt="" width="72" height="72">
+            <div>
+              <h3>Twenty-Four Mountains <span class="platform">Mac · iPhone soon</span></h3>
+              <p>Classical Feng Shui software for the Mac. The first of its kind, streamlining the charting practitioners rely on.</p>
+            </div>
+            <span class="go">24mountains.com <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="open-source">
+    <div class="wrap">
+      <h2>Open source</h2>
+      <ul class="apps">
+        <li class="app" style="--c: var(--code)">
+          <a href="https://github.com/CocoaBeans/Pinglet">
+            <svg class="icon" viewBox="0 0 72 72" aria-hidden="true">
+              <rect width="72" height="72" rx="16" fill="var(--surface-strong)" stroke="var(--surface-line)"/>
+              <circle cx="36" cy="36" r="6" fill="var(--code)"/>
+              <circle cx="36" cy="36" r="15" fill="none" stroke="var(--code)" stroke-width="2.5" opacity="0.55"/>
+              <circle cx="36" cy="36" r="24" fill="none" stroke="var(--code)" stroke-width="2.5" opacity="0.25"/>
+            </svg>
+            <div>
+              <h3>Pinglet <span class="platform">Swift package · MIT</span></h3>
+              <p>A little ping package in modern Swift. Pings run in the background, overlap freely, and publish to SwiftUI and Combine.</p>
+            </div>
+            <span class="go">GitHub <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5"/></svg></span>
+          </a>
+        </li>
+      </ul>
+      <p class="more">More experiments and tools live on <a href="https://github.com/CocoaBeans">GitHub</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Kevin Ross</span>
+    <nav aria-label="Elsewhere">
+      <a href="https://github.com/CocoaBeans">GitHub</a>
+      <a href="mailto:kevin@twentyfourmountains.com?subject=Hello">Email</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
